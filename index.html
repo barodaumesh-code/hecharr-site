@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HECHARR — Premium Multivitamin Gummies</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://js.stripe.com/v3/"></script>
+<style>
+:root {
+  --fire: #D4380D;
+  --ember: #FF6B3D;
+  --gold: #E8A838;
+  --cream: #FAF0E4;
+  --parchment: #F2E6D4;
+  --charcoal: #1C1512;
+  --smoke: #2D2420;
+  --bark: #4A3728;
+  --ash: #8B7B6B;
+  --bone: #E8DDD0;
+  --white: #FFFDF8;
+  --green: #3D7A4A;
+  --red: #C0392B;
+  --coral: #D4380D;
+  --peach: #FF6B3D;
+  --deep: #1C1512;
+  --warm: #4A3728;
+  --mid: #8B7B6B;
+  --light: #E8DDD0;
+  --purple: #7c5cbf;
+  --teal: #2a9d8f;
+  --display: 'Bebas Neue', sans-serif;
+  --serif: 'Libre Baskerville', serif;
+  --body: 'Outfit', sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--cream);color:var(--charcoal);overflow-x:hidden}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+img{max-width:100%;display:block}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:14px 48px;background:var(--charcoal);border-bottom:3px solid var(--fire);transition:box-shadow .3s}
+.nav-logo{font-family:var(--display);font-size:36px;font-weight:400;color:var(--cream);letter-spacing:4px;cursor:pointer;text-transform:uppercase}
+.nav-logo span{color:var(--fire)}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{text-decoration:none;color:var(--bone);font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;transition:color .2s}
+.nav-links a:hover{color:var(--ember)}
+.nav-right{display:flex;align-items:center;gap:10px}
+
+.currency-selector{position:relative}
+.currency-btn{display:flex;align-items:center;gap:6px;padding:8px 14px;background:var(--smoke);border:1px solid var(--bark);border-radius:4px;font-family:var(--body);font-size:12px;font-weight:600;color:var(--bone);cursor:pointer;transition:all .2s;letter-spacing:1px}
+.currency-btn:hover{background:var(--fire);color:var(--cream);border-color:var(--fire)}
+.currency-flag{font-size:14px}
+.currency-dropdown{position:absolute;top:calc(100% + 8px);right:0;background:var(--charcoal);border-radius:4px;box-shadow:0 12px 40px rgba(0,0,0,.5);border:1px solid var(--bark);min-width:220px;overflow:hidden;display:none;z-index:999}
+.currency-dropdown.open{display:block}
+.currency-option{display:flex;align-items:center;gap:10px;padding:11px 16px;cursor:pointer;transition:background .15s;font-size:13px;color:var(--bone)}
+.currency-option:hover{background:var(--smoke)}
+.currency-option.active{background:var(--fire);color:var(--cream);font-weight:600}
+.currency-flag-lg{font-size:16px;width:24px}
+.currency-name{flex:1}
+.currency-code{font-size:10px;color:var(--ash);font-weight:700;letter-spacing:1px}
+.currency-option.active .currency-code{color:rgba(255,255,255,.7)}
+
+.btn-nav{padding:8px 20px;border:2px solid var(--ember);background:transparent;color:var(--ember);border-radius:2px;font-size:11px;font-weight:700;cursor:pointer;transition:all .2s;font-family:var(--body);letter-spacing:2px;text-transform:uppercase}
+.btn-nav:hover,.btn-nav.filled{background:var(--fire);color:var(--cream);border-color:var(--fire)}
+.btn-nav.filled:hover{background:var(--ember);border-color:var(--ember)}
+.cart-btn{position:relative;cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:var(--smoke);border-radius:4px;transition:all .2s;border:1px solid var(--bark)}
+.cart-btn:hover{background:var(--fire);border-color:var(--fire)}
+.cart-btn:hover svg{stroke:var(--cream)}
+.cart-btn svg{stroke:var(--bone)}
+.cart-badge{position:absolute;top:-5px;right:-5px;width:20px;height:20px;background:var(--fire);color:var(--cream);border-radius:50%;font-size:10px;font-weight:700;display:none;align-items:center;justify-content:center;border:2px solid var(--charcoal)}
+
+/* ===== HERO ===== */
+.hero{min-height:100vh;padding:140px 48px 80px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;position:relative;overflow:hidden;background:var(--charcoal)}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%, rgba(212,56,13,.12) 0%,transparent 60%);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:6px;background:repeating-linear-gradient(90deg,var(--fire) 0,var(--fire) 40px,var(--gold) 40px,var(--gold) 80px)}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(212,56,13,.15);border:1px solid rgba(212,56,13,.3);padding:7px 18px;border-radius:2px;font-size:10px;font-weight:700;color:var(--ember);letter-spacing:3px;text-transform:uppercase;margin-bottom:24px}
+.hero-dot{width:8px;height:8px;background:var(--fire);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.5)}}
+.hero h1{font-family:var(--display);font-size:clamp(64px,7vw,110px);font-weight:400;line-height:.92;color:var(--cream);margin-bottom:24px;letter-spacing:3px;text-transform:uppercase}
+.hero h1 em{font-style:normal;color:var(--fire)}
+.hero-desc{font-size:16px;line-height:1.8;color:var(--ash);max-width:440px;margin-bottom:40px;font-family:var(--serif);font-style:italic}
+.hero-cta{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.btn-primary{padding:16px 40px;background:var(--fire);color:var(--cream);border:none;border-radius:2px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--body);transition:all .25s;box-shadow:0 8px 24px rgba(212,56,13,.4);letter-spacing:3px;text-transform:uppercase}
+.btn-primary:hover{background:var(--ember);transform:translateY(-2px);box-shadow:0 14px 36px rgba(212,56,13,.45)}
+.btn-secondary{padding:16px 36px;background:transparent;color:var(--bone);border:2px solid var(--bark);border-radius:2px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--body);transition:all .25s;letter-spacing:3px;text-transform:uppercase}
+.btn-secondary:hover{border-color:var(--ember);color:var(--ember)}
+.hero-stats{display:flex;gap:36px;margin-top:48px;padding-top:32px;border-top:1px solid var(--bark)}
+.stat-num{font-family:var(--display);font-size:40px;font-weight:400;color:var(--fire);line-height:1;letter-spacing:2px}
+.stat-lbl{font-size:11px;color:var(--ash);font-weight:600;margin-top:4px;letter-spacing:1px;text-transform:uppercase}
+
+/* HERO IMAGE */
+.hero-visual{display:flex;justify-content:center;align-items:center;position:relative}
+.hero-product-img{width:100%;max-width:520px;border-radius:12px;box-shadow:0 40px 80px rgba(0,0,0,.4);animation:float 5s ease-in-out infinite;border:3px solid var(--bark)}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-.5deg)}50%{transform:translateY(-12px) rotate(.5deg)}}
+.float-badge{position:absolute;background:var(--charcoal);border:1px solid var(--bark);border-radius:4px;padding:10px 16px;box-shadow:0 12px 32px rgba(0,0,0,.4);font-size:12px;font-weight:700;display:flex;align-items:center;gap:6px;animation:float 3.5s ease-in-out infinite}
+.fb1{top:36px;right:-32px;color:var(--green);animation-delay:.5s}
+.fb2{bottom:56px;left:-44px;color:var(--ember);animation-delay:1s}
+.fb3{top:170px;left:-52px;color:var(--gold);animation-delay:1.5s}
+
+/* ===== SHOWCASE BANNER ===== */
+.showcase{padding:0;background:var(--charcoal);position:relative}
+.showcase-img{width:100%;height:auto;display:block}
+.showcase-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(28,21,18,.85) 0%,rgba(28,21,18,.3) 50%,transparent 100%);display:flex;flex-direction:column;justify-content:center;padding:clamp(2rem,5vw,5rem) clamp(2rem,5vw,6rem)}
+.showcase-overlay .section-tag{color:var(--gold);font-size:10px;font-weight:700;letter-spacing:5px;text-transform:uppercase;margin-bottom:14px}
+.showcase-overlay h2{font-family:var(--display);font-size:clamp(32px,5vw,64px);color:var(--cream);letter-spacing:3px;text-transform:uppercase;line-height:1;margin-bottom:16px}
+.showcase-overlay p{color:var(--ash);font-size:15px;max-width:400px;line-height:1.7;font-family:var(--serif);font-style:italic;margin-bottom:24px}
+.showcase-overlay .btn-primary{display:inline-block;width:auto}
+
+/* ===== LIFESTYLE GALLERY ===== */
+.gallery{padding:80px 48px;background:var(--parchment)}
+.gallery-grid{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:300px 300px;gap:16px;max-width:1200px;margin:0 auto}
+.gallery-item{border-radius:8px;overflow:hidden;position:relative;cursor:pointer}
+.gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.4,0,.2,1)}
+.gallery-item:hover img{transform:scale(1.06)}
+.gallery-item::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(28,21,18,.5) 0%,transparent 50%);pointer-events:none;transition:opacity .3s}
+.gallery-item:hover::after{opacity:.6}
+.gallery-item:first-child{grid-row:span 2}
+.gallery-caption{position:absolute;bottom:16px;left:16px;z-index:2;color:var(--cream)}
+.gallery-caption h4{font-family:var(--display);font-size:22px;letter-spacing:2px;text-transform:uppercase}
+.gallery-caption span{font-size:11px;color:rgba(255,255,255,.7);font-weight:600;letter-spacing:1px;text-transform:uppercase}
+
+/* ===== SLEEP FEATURE SECTION ===== */
+.feature-split{padding:100px 48px;background:var(--charcoal);position:relative;overflow:hidden}
+.feature-split::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 60% 50%,rgba(124,92,191,.1),transparent 60%)}
+.feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;max-width:1200px;margin:0 auto}
+.feature-img{border-radius:12px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.4)}
+.feature-img img{width:100%;height:auto}
+.feature-text .section-tag{color:var(--purple);font-size:10px;font-weight:700;letter-spacing:5px;text-transform:uppercase;margin-bottom:14px}
+.feature-text h2{font-family:var(--display);font-size:clamp(36px,4vw,56px);color:var(--cream);letter-spacing:3px;text-transform:uppercase;line-height:1;margin-bottom:18px}
+.feature-text p{color:var(--ash);font-size:15px;line-height:1.7;font-family:var(--serif);font-style:italic;margin-bottom:28px;max-width:440px}
+.feature-list{display:flex;flex-direction:column;gap:14px}
+.feature-item{display:flex;align-items:flex-start;gap:14px;padding:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:6px;transition:all .3s}
+.feature-item:hover{background:rgba(124,92,191,.1);border-color:rgba(124,92,191,.2)}
+.feature-icon{width:40px;height:40px;background:var(--purple);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.feature-item h4{font-size:14px;font-weight:700;color:var(--cream);margin-bottom:3px}
+.feature-item span{font-size:12px;color:var(--ash)}
+
+.marquee{background:var(--fire);padding:16px 0;overflow:hidden;border-top:3px solid var(--gold);border-bottom:3px solid var(--gold)}
+.marquee-track{display:flex;gap:48px;animation:marquee 22s linear infinite;white-space:nowrap}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.marquee-item{color:var(--cream);font-size:11px;font-weight:800;letter-spacing:4px;text-transform:uppercase;display:flex;align-items:center;gap:14px}
+.mdot{width:6px;height:6px;background:var(--gold);border-radius:50%}
+
+.section{padding:100px 48px}
+.section-header{text-align:center;margin-bottom:64px}
+.section-tag{font-size:10px;font-weight:700;color:var(--fire);letter-spacing:5px;text-transform:uppercase;margin-bottom:14px}
+.section-title{font-family:var(--display);font-size:clamp(40px,4.5vw,64px);font-weight:400;color:var(--charcoal);line-height:1;letter-spacing:3px;text-transform:uppercase}
+.section-desc{font-size:15px;color:var(--ash);margin-top:18px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.7;font-family:var(--serif);font-style:italic}
+
+/* ===== PRODUCTS ===== */
+.products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1100px;margin:0 auto}
+.product-card{background:var(--white);border-radius:4px;overflow:hidden;transition:all .3s;border:2px solid var(--bone);cursor:pointer;position:relative}
+.product-card:hover{transform:translateY(-6px);box-shadow:0 24px 60px rgba(28,21,18,.15);border-color:var(--fire)}
+.product-img{height:280px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:var(--parchment)}
+.product-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+.product-card:hover .product-img img{transform:scale(1.06)}
+.product-badge{position:absolute;top:12px;left:12px;color:var(--cream);font-size:9px;font-weight:700;padding:5px 12px;border-radius:2px;letter-spacing:2px;text-transform:uppercase;z-index:2}
+.product-info{padding:24px}
+.product-name{font-family:var(--display);font-size:26px;font-weight:400;color:var(--charcoal);margin-bottom:8px;letter-spacing:2px;text-transform:uppercase}
+.product-desc{font-size:13px;color:var(--ash);line-height:1.6;margin-bottom:16px;font-family:var(--serif);font-style:italic}
+.product-benefits{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+.benefit-pill{background:var(--parchment);color:var(--bark);font-size:10px;font-weight:700;padding:4px 10px;border-radius:2px;letter-spacing:1px;text-transform:uppercase}
+.product-footer{display:flex;align-items:center;justify-content:space-between}
+.product-price{font-family:var(--display);font-size:28px;font-weight:400;color:var(--fire);letter-spacing:1px}
+.product-price-sub{font-size:10px;color:var(--ash);font-family:var(--body);letter-spacing:1px;text-transform:uppercase}
+.product-rating{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--ash);margin-bottom:10px}
+.stars{color:var(--gold)}
+.btn-add{padding:10px 22px;background:var(--fire);color:var(--cream);border:none;border-radius:2px;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--body);transition:all .2s;letter-spacing:2px;text-transform:uppercase}
+.btn-add:hover{background:var(--charcoal);transform:scale(1.03)}
+
+/* ===== PRODUCT DETAIL MODAL ===== */
+.product-modal-overlay{position:fixed;inset:0;background:rgba(28,21,18,.7);z-index:1200;display:none;align-items:center;justify-content:center;backdrop-filter:blur(6px);padding:20px}
+.product-modal-overlay.open{display:flex}
+.product-modal{background:var(--cream);border-radius:4px;width:100%;max-width:800px;max-height:90vh;overflow-y:auto;position:relative;box-shadow:0 32px 80px rgba(0,0,0,.4);animation:modalIn .3s cubic-bezier(.16,1,.3,1);border:2px solid var(--fire)}
+@keyframes modalIn{from{transform:scale(.94) translateY(16px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
+.product-modal-close{position:absolute;top:14px;right:14px;width:36px;height:36px;border:2px solid var(--bone);background:var(--white);border-radius:4px;cursor:pointer;font-size:16px;color:var(--ash);display:flex;align-items:center;justify-content:center;transition:all .2s;z-index:10}
+.product-modal-close:hover{background:var(--fire);color:var(--cream);border-color:var(--fire)}
+.product-modal-img{width:100%;height:350px;object-fit:cover}
+.product-modal-body{padding:32px}
+.product-modal-body .product-rating{margin-bottom:8px}
+.product-modal-body .product-name{font-size:36px;margin-bottom:12px}
+.product-modal-body .product-desc{font-size:15px;line-height:1.8;margin-bottom:20px}
+.modal-ingredients{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.modal-ingredient{background:var(--parchment);border:1px solid var(--bone);padding:6px 14px;border-radius:4px;font-size:11px;font-weight:700;color:var(--bark);letter-spacing:1px;text-transform:uppercase}
+.product-modal-footer{display:flex;align-items:center;justify-content:space-between;padding-top:20px;border-top:2px solid var(--bone)}
+.product-modal-footer .product-price{font-size:36px}
+.product-modal-footer .btn-add{padding:14px 32px;font-size:13px}
+
+.ingredients{background:var(--charcoal);color:var(--cream);padding:100px 48px;position:relative}
+.ingredients::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 60px,rgba(255,255,255,.02) 60px,rgba(255,255,255,.02) 61px);pointer-events:none}
+.ingredients .section-tag{color:var(--gold)}
+.ingredients .section-title{color:var(--cream)}
+.ingredients .section-desc{color:var(--ash)}
+.ingredients-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:1100px;margin:0 auto;position:relative}
+.ingredient-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:4px;padding:28px;transition:all .3s}
+.ingredient-card:hover{background:rgba(212,56,13,.12);border-color:rgba(212,56,13,.3);transform:translateY(-4px)}
+.ingredient-icon{margin-bottom:16px;line-height:1}
+.ingredient-name{font-family:var(--display);font-size:20px;font-weight:400;margin-bottom:8px;letter-spacing:2px;text-transform:uppercase}
+.ingredient-benefit{font-size:13px;color:var(--ash);line-height:1.6;font-family:var(--serif);font-style:italic}
+
+.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:1100px;margin:0 auto}
+.review-card{background:var(--white);border-radius:4px;padding:28px;border:2px solid var(--bone);transition:all .3s}
+.review-card:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(28,21,18,.1);border-color:var(--gold)}
+.review-stars{color:var(--gold);font-size:18px;margin-bottom:12px}
+.review-text{font-size:14px;line-height:1.75;color:var(--bark);margin-bottom:20px;font-family:var(--serif);font-style:italic}
+.review-author{display:flex;align-items:center;gap:12px}
+.review-avatar{width:40px;height:40px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:white;flex-shrink:0}
+.review-name{font-weight:700;font-size:13px;color:var(--charcoal)}
+.review-verified{font-size:10px;color:var(--green);font-weight:700;margin-top:2px;letter-spacing:1px;text-transform:uppercase}
+
+.subscription-section{background:var(--smoke);padding:100px 48px;position:relative}
+.subscription-section::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:repeating-linear-gradient(90deg,var(--fire) 0,var(--fire) 40px,transparent 40px,transparent 80px)}
+.subscription-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;max-width:1000px;margin:0 auto}
+.sub-feature{display:flex;align-items:flex-start;gap:14px;margin-bottom:22px}
+.sub-icon{width:44px;height:44px;background:var(--fire);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.sub-feat-title{font-weight:700;font-size:14px;color:var(--cream);margin-bottom:4px}
+.sub-feat-desc{font-size:13px;color:var(--ash);line-height:1.5}
+.sub-card{background:var(--cream);border-radius:4px;padding:36px;box-shadow:0 24px 64px rgba(0,0,0,.3);border:2px solid var(--fire)}
+.sub-price-label{font-size:11px;color:var(--ash);font-weight:700;margin-bottom:6px;letter-spacing:2px;text-transform:uppercase}
+.sub-price{font-family:var(--display);font-size:56px;font-weight:400;color:var(--fire);line-height:1;margin-bottom:4px;letter-spacing:2px}
+.sub-price span{font-size:22px}
+.sub-save{display:inline-block;background:rgba(61,122,74,.12);color:var(--green);font-size:11px;font-weight:700;padding:5px 12px;border-radius:2px;margin-bottom:22px;letter-spacing:1px;text-transform:uppercase}
+.sub-option{display:flex;align-items:center;gap:12px;padding:14px 16px;border:2px solid var(--bone);border-radius:4px;margin-bottom:9px;cursor:pointer;transition:all .2s}
+.sub-option:hover,.sub-option.active{border-color:var(--fire);background:rgba(212,56,13,.04)}
+.sub-radio{width:16px;height:16px;border:2px solid var(--bone);border-radius:50%;flex-shrink:0;transition:all .2s;display:flex;align-items:center;justify-content:center}
+.sub-option.active .sub-radio{border-color:var(--fire);background:var(--fire)}
+.sub-option.active .sub-radio::after{content:'';width:6px;height:6px;background:var(--cream);border-radius:50%}
+.sub-option-name{font-weight:700;font-size:14px;color:var(--charcoal)}
+.sub-option-desc{font-size:12px;color:var(--ash)}
+.sub-option-price{margin-left:auto;font-weight:700;color:var(--fire);font-family:var(--display);font-size:18px;letter-spacing:1px}
+
+.faq-section{padding:100px 48px;background:var(--parchment)}
+.faq-list{max-width:720px;margin:0 auto}
+.faq-item{border-bottom:2px solid var(--bone);overflow:hidden}
+.faq-question{display:flex;align-items:center;justify-content:space-between;padding:22px 0;cursor:pointer;font-weight:700;font-size:15px;color:var(--charcoal);transition:color .2s}
+.faq-question:hover{color:var(--fire)}
+.faq-arrow{font-size:18px;color:var(--fire);transition:transform .3s;flex-shrink:0}
+.faq-item.open .faq-arrow{transform:rotate(180deg)}
+.faq-answer{max-height:0;overflow:hidden;transition:max-height .35s ease;font-size:14px;color:var(--ash);line-height:1.75;font-family:var(--serif);font-style:italic}
+.faq-item.open .faq-answer{max-height:200px;padding-bottom:20px}
+
+footer{background:var(--charcoal);color:var(--ash);padding:56px 48px;text-align:center;border-top:4px solid var(--fire)}
+footer .footer-logo{font-family:var(--display);font-size:36px;font-weight:400;color:var(--cream);margin-bottom:8px;letter-spacing:6px}
+footer .footer-links{display:flex;justify-content:center;gap:28px;margin:18px 0;flex-wrap:wrap}
+footer .footer-links a{color:var(--ash);text-decoration:none;font-size:11px;transition:color .2s;letter-spacing:2px;text-transform:uppercase;font-weight:600}
+footer .footer-links a:hover{color:var(--ember)}
+footer p{font-size:11px;color:rgba(139,123,107,.5)}
+
+/* ===== CART DRAWER ===== */
+.cart-overlay{position:fixed;inset:0;background:rgba(28,21,18,.6);z-index:1100;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(6px)}
+.cart-overlay.open{opacity:1;pointer-events:auto}
+.cart-drawer{position:fixed;top:0;right:0;bottom:0;width:400px;background:var(--cream);z-index:1101;transform:translateX(100%);transition:transform .35s cubic-bezier(.16,1,.3,1);display:flex;flex-direction:column;box-shadow:-12px 0 48px rgba(0,0,0,.2);border-left:3px solid var(--fire)}
+.cart-drawer.open{transform:translateX(0)}
+.cart-header{padding:22px 24px;border-bottom:2px solid var(--bone);display:flex;align-items:center;justify-content:space-between;background:var(--charcoal)}
+.cart-title{font-family:var(--display);font-size:24px;font-weight:400;color:var(--cream);letter-spacing:3px}
+.cart-close{cursor:pointer;width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:4px;background:var(--smoke);border:1px solid var(--bark);font-size:14px;color:var(--bone);transition:all .2s}
+.cart-close:hover{background:var(--fire);color:var(--cream);border-color:var(--fire)}
+.cart-body{flex:1;overflow-y:auto;padding:16px 24px}
+.cart-empty{text-align:center;padding:60px 0}
+.cart-empty-emoji{font-size:48px;margin-bottom:12px}
+.cart-empty-text{font-family:var(--display);font-size:22px;color:var(--charcoal);letter-spacing:2px}
+.cart-empty-sub{font-size:13px;color:var(--ash);margin-top:6px;font-family:var(--serif);font-style:italic}
+.cart-item{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--bone)}
+.cart-item:last-child{border-bottom:none}
+.cart-item-thumb{width:56px;height:56px;border-radius:6px;object-fit:cover;flex-shrink:0;border:1px solid var(--bone)}
+.cart-item-name{font-weight:700;font-size:14px;color:var(--charcoal)}
+.cart-item-variant{font-size:11px;color:var(--ash);margin-top:2px;font-weight:600;letter-spacing:1px;text-transform:uppercase}
+.cart-item-qty{display:flex;align-items:center;gap:8px;margin-top:8px}
+.qty-btn{width:26px;height:26px;border:2px solid var(--bone);background:transparent;border-radius:4px;cursor:pointer;font-size:14px;color:var(--fire);display:flex;align-items:center;justify-content:center;transition:all .2s;font-weight:700}
+.qty-btn:hover{background:var(--fire);color:var(--cream);border-color:var(--fire)}
+.qty-num{font-weight:700;font-size:14px;min-width:20px;text-align:center}
+.cart-item-price{font-weight:700;font-size:15px;color:var(--fire);white-space:nowrap}
+.cart-remove{cursor:pointer;color:var(--ash);font-size:13px;padding:3px;transition:color .2s;font-weight:600}
+.cart-remove:hover{color:var(--red)}
+.cart-footer{padding:16px 24px;border-top:2px solid var(--bone)}
+.cart-subtotal{display:flex;justify-content:space-between;font-size:13px;color:var(--ash);margin-bottom:6px;font-weight:600}
+.cart-total{display:flex;justify-content:space-between;font-size:17px;font-weight:700;color:var(--charcoal);margin:12px 0}
+
+/* ===== MODALS ===== */
+.modal-overlay{position:fixed;inset:0;background:rgba(28,21,18,.7);z-index:1200;display:none;align-items:center;justify-content:center;backdrop-filter:blur(6px);padding:20px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--cream);border-radius:4px;padding:40px;width:100%;max-width:460px;position:relative;box-shadow:0 32px 80px rgba(0,0,0,.4);animation:modalIn .3s cubic-bezier(.16,1,.3,1);border:2px solid var(--fire)}
+.modal.wide{max-width:520px}
+.modal-close{position:absolute;top:14px;right:14px;width:32px;height:32px;border:2px solid var(--bone);background:transparent;border-radius:4px;cursor:pointer;font-size:14px;color:var(--ash);display:flex;align-items:center;justify-content:center;transition:all .2s}
+.modal-close:hover{background:var(--fire);color:var(--cream);border-color:var(--fire)}
+.modal-title{font-family:var(--display);font-size:32px;font-weight:400;color:var(--charcoal);margin-bottom:6px;letter-spacing:2px;text-transform:uppercase}
+.modal-sub{font-size:14px;color:var(--ash);margin-bottom:28px;font-family:var(--serif);font-style:italic}
+.modal-link{color:var(--fire);cursor:pointer;font-weight:700;text-decoration:none}
+.modal-link:hover{text-decoration:underline}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-group{margin-bottom:16px}
+.form-label{display:block;font-size:10px;font-weight:700;color:var(--ash);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+.form-input{width:100%;padding:12px 15px;border:2px solid var(--bone);border-radius:4px;font-size:14px;font-family:var(--body);color:var(--charcoal);background:var(--white);outline:none;transition:border-color .2s}
+.form-input:focus{border-color:var(--fire);box-shadow:0 0 0 3px rgba(212,56,13,.1)}
+.form-input::placeholder{color:var(--ash)}
+.btn-modal{width:100%;padding:14px;background:var(--fire);color:var(--cream);border:none;border-radius:4px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--body);transition:all .2s;margin-top:8px;letter-spacing:2px;text-transform:uppercase}
+.btn-modal:hover{background:var(--charcoal);transform:translateY(-1px)}
+.btn-modal:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.divider{text-align:center;color:var(--ash);font-size:12px;margin:18px 0;position:relative;letter-spacing:2px;text-transform:uppercase;font-weight:600}
+.divider::before,.divider::after{content:'';position:absolute;top:50%;width:40%;height:2px;background:var(--bone)}
+.divider::before{left:0}.divider::after{right:0}
+.error-msg{color:var(--red);font-size:13px;margin-top:8px;text-align:center;font-weight:600}
+.success-msg{color:var(--green);font-size:13px;margin-top:8px;text-align:center;font-weight:600}
+
+.checkout-steps{display:flex;gap:6px;margin-bottom:24px}
+.ck-step{flex:1;text-align:center;padding:8px 6px;font-size:10px;font-weight:700;border-radius:2px;background:var(--bone);color:var(--ash);transition:all .2s;letter-spacing:1px;text-transform:uppercase}
+.ck-step.active{background:var(--fire);color:var(--cream)}
+.ck-step.done{background:rgba(61,122,74,.15);color:var(--green)}
+.order-mini{background:var(--parchment);border-radius:4px;padding:14px;margin-bottom:20px;border:1px solid var(--bone)}
+.order-mini-item{display:flex;justify-content:space-between;font-size:13px;color:var(--ash);margin-bottom:4px}
+.order-mini-total{display:flex;justify-content:space-between;font-size:15px;font-weight:700;color:var(--charcoal);margin-top:8px;padding-top:8px;border-top:2px solid var(--bone)}
+.secure-badge{display:flex;align-items:center;justify-content:center;gap:6px;font-size:12px;color:var(--ash);margin:10px 0}
+
+#stripe-card-element{padding:14px 15px;background:var(--white);border:2px solid var(--bone);border-radius:4px;min-height:48px;transition:border-color .2s}
+#stripe-card-element.StripeElement--focus{border-color:var(--fire);box-shadow:0 0 0 3px rgba(212,56,13,.1)}
+#stripe-card-errors{color:var(--red);font-size:12px;margin-top:6px;min-height:16px}
+
+.spinner{display:inline-flex;gap:4px;align-items:center;height:18px}
+.spinner span{width:6px;height:6px;background:currentColor;border-radius:50%;animation:spin-dot .8s ease-in-out infinite}
+.spinner span:nth-child(2){animation-delay:.15s}
+.spinner span:nth-child(3){animation-delay:.3s}
+@keyframes spin-dot{0%,80%,100%{transform:scale(.6);opacity:.4}40%{transform:scale(1);opacity:1}}
+
+#toastContainer{position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:8px}
+.toast{display:flex;align-items:center;gap:10px;background:var(--charcoal);color:var(--cream);padding:14px 20px;border-radius:4px;font-size:13px;font-weight:600;box-shadow:0 12px 32px rgba(0,0,0,.3);animation:toastIn .3s cubic-bezier(.16,1,.3,1);border-left:4px solid var(--gold)}
+.toast.success{border-left-color:var(--green)}
+.toast.error{border-left-color:var(--red)}
+@keyframes toastIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+
+.user-menu{position:relative}
+.user-btn{display:flex;align-items:center;gap:7px;padding:8px 14px;background:var(--smoke);border:1px solid var(--bark);border-radius:4px;font-family:var(--body);font-size:12px;font-weight:600;color:var(--bone);cursor:pointer;transition:all .2s}
+.user-btn:hover{background:var(--fire);color:var(--cream);border-color:var(--fire)}
+.user-dropdown{position:absolute;top:calc(100% + 8px);right:0;background:var(--charcoal);border-radius:4px;box-shadow:0 12px 40px rgba(0,0,0,.4);border:1px solid var(--bark);min-width:180px;overflow:hidden;display:none;z-index:999}
+.user-dropdown.open{display:block}
+.user-dropdown-item{padding:12px 16px;font-size:13px;color:var(--bone);cursor:pointer;transition:background .15s;font-weight:600}
+.user-dropdown-item:hover{background:var(--smoke)}
+.user-dropdown-item.danger{color:var(--red)}
+
+/* ===== HAMBURGER ===== */
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:6px;flex-direction:column;gap:5px;justify-content:center}
+.hamburger span{display:block;width:22px;height:2px;background:var(--bone);border-radius:2px;transition:all .3s}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+.mobile-menu{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:var(--charcoal);z-index:999;padding:80px 24px 32px;flex-direction:column;overflow-y:auto;transform:translateY(-100%);transition:transform .35s cubic-bezier(.16,1,.3,1)}
+.mobile-menu.open{transform:translateY(0)}
+.mobile-menu-links{list-style:none;margin-bottom:32px}
+.mobile-menu-links li{border-bottom:1px solid var(--bark)}
+.mobile-menu-links a{display:block;padding:18px 0;color:var(--cream);text-decoration:none;font-family:var(--display);font-size:28px;letter-spacing:4px;text-transform:uppercase;transition:color .2s}
+.mobile-menu-links a:hover{color:var(--fire)}
+.mobile-menu-section{margin-bottom:24px}
+.mobile-menu-label{font-size:10px;font-weight:700;color:var(--ash);letter-spacing:3px;text-transform:uppercase;margin-bottom:12px}
+.mobile-currency-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mobile-currency-opt{padding:10px 12px;background:var(--smoke);border:1px solid var(--bark);border-radius:4px;color:var(--bone);font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:8px;transition:all .2s}
+.mobile-currency-opt:hover,.mobile-currency-opt.active{background:var(--fire);border-color:var(--fire);color:var(--cream)}
+.mobile-auth-btns{display:flex;gap:10px;margin-top:8px}
+.mobile-auth-btns button{flex:1;padding:14px;border-radius:4px;font-family:var(--body);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.mobile-auth-btns .mob-login{background:transparent;border:2px solid var(--ember);color:var(--ember)}
+.mobile-auth-btns .mob-signup{background:var(--fire);border:2px solid var(--fire);color:var(--cream)}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:900px){
+  nav{padding:10px 16px;gap:8px}
+  .nav-logo{font-size:24px;letter-spacing:2px}
+  .nav-links{display:none}
+  .nav-right{gap:6px}
+  .currency-selector{display:none}
+  .btn-nav{padding:6px 12px;font-size:9px;letter-spacing:1px}
+  .cart-btn{width:36px;height:36px}
+  .hamburger{display:flex}
+  .mobile-menu{display:flex}
+  #authButtons{display:none !important}
+  .hero{grid-template-columns:1fr;padding:100px 20px 50px;text-align:center}
+  .hero h1{font-size:clamp(42px,12vw,64px);letter-spacing:1px}
+  .hero-visual{margin-top:32px}
+  .hero-product-img{max-width:320px;margin:0 auto}
+  .float-badge{display:none}
+  .hero-cta{justify-content:center}
+  .hero-stats{justify-content:center;gap:20px}
+  .hero-desc{margin-left:auto;margin-right:auto;font-size:14px}
+  .showcase-overlay h2{font-size:clamp(24px,5vw,40px)}
+  .gallery{padding:40px 16px}
+  .gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:250px 200px 200px}
+  .gallery-item:first-child{grid-column:span 2}
+  .feature-split{padding:60px 20px}
+  .feature-grid{grid-template-columns:1fr;gap:32px}
+  .feature-img{order:1}
+  .section{padding:60px 20px}
+  .section-title{font-size:clamp(32px,8vw,48px);letter-spacing:1px}
+  .products-grid{grid-template-columns:1fr;gap:20px}
+  .product-card{max-width:400px;margin:0 auto;width:100%}
+  .ingredients{padding:60px 20px}
+  .ingredients-grid{grid-template-columns:1fr 1fr;gap:12px}
+  .reviews-grid{grid-template-columns:1fr;gap:16px}
+  .subscription-section{padding:60px 20px}
+  .subscription-grid{grid-template-columns:1fr;gap:32px}
+  .faq-section{padding:60px 20px}
+  footer{padding:40px 20px}
+  .cart-drawer{width:100%;max-width:100%}
+  .modal{padding:28px 20px;margin:12px;max-width:100%}
+  .modal.wide{max-width:100%}
+  .form-row{grid-template-columns:1fr}
+  .product-modal{max-width:100%}
+  .product-modal-img{height:250px}
+  .product-modal-body .product-name{font-size:28px}
+}
+@media(max-width:400px){
+  nav{padding:8px 12px}
+  .nav-logo{font-size:20px;letter-spacing:1px}
+  .hero{padding:90px 16px 40px}
+  .hero h1{font-size:36px}
+  .section{padding:48px 16px}
+  .ingredients{padding:48px 16px}
+  .ingredients-grid{grid-template-columns:1fr}
+  .gallery-grid{grid-template-columns:1fr;grid-template-rows:repeat(5,200px)}
+  .gallery-item:first-child{grid-column:span 1}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">HECHAR<span>R</span></div>
+  <ul class="nav-links">
+    <li><a href="#products">Products</a></li>
+    <li><a href="#ingredients">Ingredients</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#subscribe">Subscribe</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="currency-selector" id="currencySelector">
+      <button class="currency-btn" id="currencyBtn" onclick="toggleCurrencyDropdown(event)">
+        <span class="currency-flag" id="activeCurrencyFlag">🇺🇸</span>
+        <span id="activeCurrencyCode">USD</span>
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="currency-dropdown" id="currencyDropdown"></div>
+    </div>
+    <div id="authButtons" style="display:flex;gap:8px">
+      <button class="btn-nav" onclick="openModal('login')">Log in</button>
+      <button class="btn-nav filled" onclick="openModal('signup')">Sign up</button>
+    </div>
+    <div id="userMenu" class="user-menu" style="display:none">
+      <button class="user-btn" id="userMenuBtn" onclick="toggleUserMenu(event)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span id="userMenuName">Hi!</span>
+      </button>
+      <div class="user-dropdown" id="userDropdown">
+        <div class="user-dropdown-item" onclick="openOrdersModal()">📦 My Orders</div>
+        <div class="user-dropdown-item danger" onclick="logout()">↗ Log out</div>
+      </div>
+    </div>
+    <button class="cart-btn" onclick="toggleCart()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--bone)" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 001.99 1.61h9.72a2 2 0 001.98-1.68l1.6-8.32H6"/></svg>
+      <div class="cart-badge" id="cartBadge">0</div>
+    </button>
+    <button class="hamburger" id="hamburgerBtn" onclick="toggleMobileMenu()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <ul class="mobile-menu-links">
+    <li><a href="#products" onclick="closeMobileMenu()">Products</a></li>
+    <li><a href="#ingredients" onclick="closeMobileMenu()">Ingredients</a></li>
+    <li><a href="#reviews" onclick="closeMobileMenu()">Reviews</a></li>
+    <li><a href="#subscribe" onclick="closeMobileMenu()">Subscribe</a></li>
+    <li><a href="#faq" onclick="closeMobileMenu()">FAQ</a></li>
+  </ul>
+  <div class="mobile-menu-section">
+    <div class="mobile-menu-label">Currency</div>
+    <div class="mobile-currency-grid" id="mobileCurrencyGrid"></div>
+  </div>
+  <div class="mobile-menu-section">
+    <div class="mobile-menu-label">Account</div>
+    <div id="mobileAuthSection"></div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-tag"><div class="hero-dot"></div>New Formula 2025</div>
+    <h1>Feel <em>Amazing</em><br>Every Single<br>Day</h1>
+    <p class="hero-desc">Premium multivitamin gummies packed with 15 essential nutrients. Delicious, science-backed, and designed for your daily wellness routine.</p>
+    <div class="hero-cta">
+      <button class="btn-primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Shop Now →</button>
+      <button class="btn-secondary" onclick="document.getElementById('ingredients').scrollIntoView({behavior:'smooth'})">See Ingredients</button>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-num">50K+</div><div class="stat-lbl">Happy Customers</div></div>
+      <div><div class="stat-num">4.9★</div><div class="stat-lbl">Average Rating</div></div>
+      <div><div class="stat-num">100%</div><div class="stat-lbl">Vegan & Natural</div></div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <img class="hero-product-img" src="images/multivitamin-hero.jpg" alt="Hecharr Multivitamin Gummies" loading="eager">
+    <div class="float-badge fb1"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg> FSSAI Certified</div>
+    <div class="float-badge fb2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ember)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg> 100% Vegan</div>
+    <div class="float-badge fb3"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> #1 Best Seller</div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track" id="marqueeTrack"></div>
+</div>
+
+<!-- SHOWCASE BANNER -->
+<section class="showcase">
+  <img class="showcase-img" src="images/range-showcase.png" alt="Hecharr Gummy Range — Sleep, Multi, Immunity" loading="lazy">
+  <div class="showcase-overlay">
+    <div class="section-tag" style="color:var(--gold)">Complete Range</div>
+    <h2>Three Formulas.<br>One Healthier You.</h2>
+    <p>Sleep better, fuel your body, and strengthen your immunity — all with one delicious gummy a day.</p>
+    <button class="btn-primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Explore Products →</button>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="section" id="products">
+  <div class="section-header">
+    <div class="section-tag">Our Products</div>
+    <div class="section-title">Choose Your<br>Wellness Formula</div>
+    <div class="section-desc">Each formula is crafted by nutritionists for maximum bioavailability and taste.</div>
+  </div>
+  <div class="products-grid" id="productsGrid"></div>
+</section>
+
+<!-- SLEEP FEATURE -->
+<section class="feature-split" id="sleepFeature">
+  <div class="feature-grid">
+    <div class="feature-img">
+      <img src="images/sleep-gummies.png" alt="Hecharr Sleep Gummies with Melatonin" loading="lazy">
+    </div>
+    <div class="feature-text">
+      <div class="section-tag" style="color:var(--purple)">Featured Product</div>
+      <h2>Better Sleep<br>Starts Tonight</h2>
+      <p>Our Sleep Gummies combine Melatonin, L-Theanine, Chamomile, and Vitamin B6 to help you fall asleep faster and wake up refreshed — without grogginess.</p>
+      <div class="feature-list">
+        <div class="feature-item">
+          <div class="feature-icon">🌙</div>
+          <div><h4>Melatonin</h4><span>Helps you fall asleep faster & improves sleep quality</span></div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🧠</div>
+          <div><h4>L-Theanine</h4><span>Promotes relaxation without daytime drowsiness</span></div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🌿</div>
+          <div><h4>Chamomile</h4><span>Calms the mind & body for restful sleep</span></div>
+        </div>
+      </div>
+      <button class="btn-primary" style="margin-top:28px" onclick="addToCart(4)">Add Sleep Gummies → </button>
+    </div>
+  </div>
+</section>
+
+<!-- LIFESTYLE GALLERY -->
+<section class="gallery">
+  <div class="section-header">
+    <div class="section-tag">The Hecharr Lifestyle</div>
+    <div class="section-title">Start Every Day<br>The Hecharr Way</div>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <img src="images/greens-black.jpg" alt="Superfoods Greens Gummies" loading="lazy">
+      <div class="gallery-caption"><h4>Superfoods Greens</h4><span>Fresh & Sweet Taste</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="images/premium-canister.jpg" alt="Hecharr Premium Wellness" loading="lazy">
+      <div class="gallery-caption"><h4>Premium Wellness</h4><span>Elevate Your Everyday</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="images/superfoods-citrus.jpg" alt="Superfoods Citrus Gummies" loading="lazy">
+      <div class="gallery-caption"><h4>Citrus Burst</h4><span>Magical Citrus Flavor</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="images/superfoods-peach.jpg" alt="Superfoods Peach Gummies" loading="lazy">
+      <div class="gallery-caption"><h4>Peach & Sweet</h4><span>28 Daily Packs</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="images/superfoods-purple.jpg" alt="Superfoods Purple Gummies" loading="lazy">
+      <div class="gallery-caption"><h4>Tropical Citrus</h4><span>Dietary Supplement</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- INGREDIENTS -->
+<section class="ingredients" id="ingredients">
+  <div class="section-header">
+    <div class="section-tag" style="color:rgba(255,255,255,.5)">What's Inside</div>
+    <div class="section-title">Premium Ingredients,<br><em style="color:var(--coral)">Zero Compromises</em></div>
+    <div class="section-desc">Every ingredient is clinically studied, third-party tested, and transparently dosed.</div>
+  </div>
+  <div class="ingredients-grid" id="ingredientsGrid"></div>
+</section>
+
+<!-- REVIEWS -->
+<section class="section" id="reviews" style="background:var(--cream)">
+  <div class="section-header">
+    <div class="section-tag">Customer Love</div>
+    <div class="section-title">Real Results,<br>Real People</div>
+    <div class="section-desc">Over 50,000 customers trust HECHARR for their daily wellness journey.</div>
+  </div>
+  <div class="reviews-grid" id="reviewsGrid"></div>
+</section>
+
+<!-- SUBSCRIPTION -->
+<section class="subscription-section" id="subscribe">
+  <div class="subscription-grid">
+    <div>
+      <div class="section-tag">Subscribe & Save</div>
+      <div class="section-title" style="text-align:left;color:var(--cream)">Never Run Out<br>of <em style="color:var(--coral)">Wellness</em></div>
+      <div style="margin-top:28px">
+        <div class="sub-feature"><div class="sub-icon">💰</div><div><div class="sub-feat-title">Save Up to 20%</div><div class="sub-feat-desc">Lock in a lower price every delivery, forever.</div></div></div>
+        <div class="sub-feature"><div class="sub-icon">🚚</div><div><div class="sub-feat-title">Free Shipping Always</div><div class="sub-feat-desc">Subscribers never pay for shipping, on every order.</div></div></div>
+        <div class="sub-feature"><div class="sub-icon">✕</div><div><div class="sub-feat-title">Cancel Anytime</div><div class="sub-feat-desc">No contracts, no hassle. Pause or cancel in one click.</div></div></div>
+      </div>
+    </div>
+    <div class="sub-card" id="subscriptionCard"></div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section" id="faq">
+  <div class="section-header">
+    <div class="section-tag">FAQ</div>
+    <div class="section-title">Frequently Asked<br>Questions</div>
+  </div>
+  <div class="faq-list" id="faqList"></div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">HECHARR</div>
+  <p style="font-size:13px;color:rgba(255,255,255,.5);margin-bottom:10px">Premium Multivitamin Gummies · Calibro Nutrasciences</p>
+  <div class="footer-links">
+    <a href="#">Privacy Policy</a>
+    <a href="#">Terms of Service</a>
+    <a href="#">Shipping Policy</a>
+    <a href="#">Contact Us</a>
+    <a href="#">Refund Policy</a>
+  </div>
+  <p>© 2025 HECHARR. All rights reserved. These statements have not been evaluated by the FDA.</p>
+</footer>
+
+<!-- CART DRAWER -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <div class="cart-title">Your Cart</div>
+    <button class="cart-close" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-body" id="cartBody"></div>
+  <div id="cartFooter"></div>
+</div>
+
+<!-- PRODUCT DETAIL MODAL -->
+<div class="product-modal-overlay" id="productDetailModal">
+  <div class="product-modal">
+    <button class="product-modal-close" onclick="closeProductModal()">✕</button>
+    <div id="productDetailContent"></div>
+  </div>
+</div>
+
+<!-- LOGIN MODAL -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('login')">✕</button>
+    <div class="modal-title">Welcome Back</div>
+    <div class="modal-sub">Log in to your HECHARR account</div>
+    <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="loginEmail" type="email" placeholder="you@example.com" autocomplete="email"></div>
+    <div class="form-group"><label class="form-label">Password</label><input class="form-input" id="loginPassword" type="password" placeholder="Your password" autocomplete="current-password" onkeydown="if(event.key==='Enter')handleLogin()"></div>
+    <div id="loginError" class="error-msg"></div>
+    <button class="btn-modal" id="loginBtn" onclick="handleLogin()">Log In</button>
+    <div class="divider">or</div>
+    <div style="text-align:center;font-size:14px;color:var(--mid)">Don't have an account? <a class="modal-link" onclick="switchModal('login','signup')">Sign up free</a></div>
+  </div>
+</div>
+
+<!-- SIGNUP MODAL -->
+<div class="modal-overlay" id="signupModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('signup')">✕</button>
+    <div class="modal-title">Create Account</div>
+    <div class="modal-sub">Join 50,000+ HECHARR customers</div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">First Name</label><input class="form-input" id="signupFirst" placeholder="Alex" autocomplete="given-name"></div>
+      <div class="form-group"><label class="form-label">Last Name</label><input class="form-input" id="signupLast" placeholder="Johnson" autocomplete="family-name"></div>
+    </div>
+    <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="signupEmail" type="email" placeholder="you@example.com" autocomplete="email"></div>
+    <div class="form-group"><label class="form-label">Password (min 8 chars)</label><input class="form-input" id="signupPassword" type="password" placeholder="Create a strong password" autocomplete="new-password" onkeydown="if(event.key==='Enter')handleSignup()"></div>
+    <div id="signupError" class="error-msg"></div>
+    <button class="btn-modal" id="signupBtn" onclick="handleSignup()">Create Account</button>
+    <div class="divider">or</div>
+    <div style="text-align:center;font-size:14px;color:var(--mid)">Already have an account? <a class="modal-link" onclick="switchModal('signup','login')">Log in</a></div>
+  </div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div class="modal-overlay" id="checkoutModal">
+  <div class="modal wide">
+    <button class="modal-close" onclick="closeModal('checkout')">✕</button>
+    <div id="checkoutContent"></div>
+  </div>
+</div>
+
+<!-- ORDERS MODAL -->
+<div class="modal-overlay" id="ordersModal">
+  <div class="modal wide">
+    <button class="modal-close" onclick="closeModal('orders')">✕</button>
+    <div class="modal-title">My Orders</div>
+    <div class="modal-sub">Your order history</div>
+    <div id="ordersContent" style="margin-top:12px"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toastContainer"></div>
+
+<script>
+const STRIPE_PUBLISHABLE_KEY = 'pk_live_51SMpmF0sY7FDSD0V9E76gNJjk2maCQIswQNGvzgrXcBn1bt5ZWAmtmFf67bF2DQRpvTMdefNyWRJvf4h18FVLOFy00ALGqZaLa';
+const BACKEND_URL = 'https://hecharr-api.vercel.app';
+
+// ===== CURRENCY =====
+const CURRENCIES = [
+  { code:'USD', symbol:'$',  flag:'🇺🇸', name:'US Dollar',         decimals:2, rate:1 },
+  { code:'INR', symbol:'₹',  flag:'🇮🇳', name:'Indian Rupee',       decimals:2, rate:83.5 },
+  { code:'GBP', symbol:'£',  flag:'🇬🇧', name:'British Pound',      decimals:2, rate:0.79 },
+  { code:'EUR', symbol:'€',  flag:'🇪🇺', name:'Euro',               decimals:2, rate:0.92 },
+  { code:'AUD', symbol:'A$', flag:'🇦🇺', name:'Australian Dollar',  decimals:2, rate:1.53 },
+  { code:'CAD', symbol:'C$', flag:'🇨🇦', name:'Canadian Dollar',    decimals:2, rate:1.36 },
+  { code:'SGD', symbol:'S$', flag:'🇸🇬', name:'Singapore Dollar',   decimals:2, rate:1.34 },
+  { code:'AED', symbol:'د.إ',flag:'🇦🇪', name:'UAE Dirham',         decimals:2, rate:3.67 },
+  { code:'MYR', symbol:'RM', flag:'🇲🇾', name:'Malaysian Ringgit',  decimals:2, rate:4.72 },
+  { code:'NZD', symbol:'NZ$',flag:'🇳🇿', name:'New Zealand Dollar', decimals:2, rate:1.63 },
+];
+let activeCurrency = CURRENCIES[0];
+function convertFromUSD(usd) { return usd * activeCurrency.rate; }
+function formatPrice(usd) { return activeCurrency.symbol + convertFromUSD(usd).toFixed(activeCurrency.decimals); }
+function renderCurrencyDropdown() {
+  document.getElementById('currencyDropdown').innerHTML = CURRENCIES.map(c => `
+    <div class="currency-option ${c.code===activeCurrency.code?'active':''}" onclick="setCurrency('${c.code}')">
+      <span class="currency-flag-lg">${c.flag}</span><span class="currency-name">${c.name}</span><span class="currency-code">${c.code}</span>
+    </div>`).join('');
+}
+function toggleCurrencyDropdown(e) { e.stopPropagation(); document.getElementById('currencyDropdown').classList.toggle('open'); document.getElementById('userDropdown').classList.remove('open'); }
+function setCurrency(code) {
+  activeCurrency = CURRENCIES.find(c=>c.code===code)||CURRENCIES[0];
+  document.getElementById('activeCurrencyFlag').textContent = activeCurrency.flag;
+  document.getElementById('activeCurrencyCode').textContent = activeCurrency.code;
+  document.getElementById('currencyDropdown').classList.remove('open');
+  renderCurrencyDropdown(); renderProducts(); renderSubscription(); updateCartUI();
+  showToast(activeCurrency.flag, `Currency set to ${activeCurrency.name}`, 'success');
+}
+document.addEventListener('click', () => { document.getElementById('currencyDropdown').classList.remove('open'); document.getElementById('userDropdown')?.classList.remove('open'); });
+
+// ===== PRODUCTS DATA (with images!) =====
+const products = [
+  {
+    id:1, name:'Multivitamin Gummies', badge:'popular',
+    desc:'Our bestselling all-in-one formula. 15 vitamins and minerals for energy, immunity, and overall vitality. Mixed Berry Flavor.',
+    priceUSD:34.99, subPriceUSD:27.99,
+    benefits:['Energy','Immunity','Vitality'],
+    image:'images/multivitamin-hero.jpg',
+    thumb:'images/multivitamin-hero.jpg',
+    bg:'#F2E6D4', rating:4.9, reviews:5821,
+    ingredients:['Vitamin C','Vitamin D3','Zinc','Biotin','Vitamin B12','Folic Acid'],
+    details:'60 Gummies · Mixed Berry Flavor · Comprehensive daily nutrition with 15 essential vitamins and minerals.'
+  },
+  {
+    id:2, name:'Superfoods Greens', badge:'new',
+    desc:'Packed with superfoods and greens in a delicious gummy. Tropical Citrus Flavor. 28 convenient daily packs.',
+    priceUSD:38.99, subPriceUSD:31.19,
+    benefits:['Detox','Energy','Immunity'],
+    image:'images/greens-tropical.jpg',
+    thumb:'images/greens-tropical.jpg',
+    bg:'#E0EDDF', rating:4.8, reviews:1203,
+    ingredients:['Spirulina','Chlorella','Wheatgrass','Green Tea','Spinach','Kale'],
+    details:'28 Daily Packs · Tropical Citrus Flavor · Comprehensive nutrition from nature\'s superfoods.'
+  },
+  {
+    id:3, name:'Premium Greens — Peach', badge:null,
+    desc:'Superfoods Greens Gummies in luxurious Peach & Sweet flavor. Star-shaped gummies in a premium purple pouch.',
+    priceUSD:42.99, subPriceUSD:34.39,
+    benefits:['Antioxidants','Recovery','Beauty'],
+    image:'images/superfoods-peach.jpg',
+    thumb:'images/superfoods-peach.jpg',
+    bg:'#EDE0F0', rating:4.9, reviews:876,
+    ingredients:['Elderberry','Acai','Pomegranate','Beetroot','Turmeric','Ginger'],
+    details:'28 Daily Packs · Peach & Sweet Flavor · Premium superfoods blend with antioxidant support.'
+  },
+  {
+    id:4, name:'Sleep Gummies', badge:'popular',
+    desc:'Fall asleep faster & wake up refreshed. Melatonin + L-Theanine formula with calming Chamomile. Strawberry Flavour.',
+    priceUSD:32.99, subPriceUSD:26.39,
+    benefits:['Better Sleep','Calm Mind','No Grogginess'],
+    image:'images/sleep-gummies.png',
+    thumb:'images/sleep-gummies.png',
+    bg:'#E8E0F0', rating:4.9, reviews:3421,
+    ingredients:['Melatonin','L-Theanine','Chamomile','Vitamin B6','Passionflower','Magnesium'],
+    details:'60 Gummies · Strawberry Flavour · Take 1 gummy 30 minutes before bedtime for best results.'
+  },
+  {
+    id:5, name:'Hair Strength Gummies', badge:'new',
+    desc:'Biotin & Vitamin E powered gummies to reduce hairfall and maintain hair health. Strawberry Flavour.',
+    priceUSD:36.99, subPriceUSD:29.59,
+    benefits:['Hair Growth','Less Hairfall','Stronger Hair'],
+    image:'images/hair-strength.png',
+    thumb:'images/hair-strength.png',
+    bg:'#F0E4E0', rating:4.7, reviews:742,
+    ingredients:['Biotin','Vitamin E','Zinc','Folic Acid','Vitamin A','Iron'],
+    details:'60 Gummies · Strawberry Flavour · Research driven smart blends for healthier, stronger hair.'
+  },
+  {
+    id:6, name:'Daily Wellness Canister', badge:null,
+    desc:'Elegant dark canister with daily wellness gummies. Elderberry & Vitamins blend for everyday vitality.',
+    priceUSD:44.99, subPriceUSD:35.99,
+    benefits:['Premium','Daily Wellness','Antioxidants'],
+    image:'images/premium-canister.jpg',
+    thumb:'images/premium-canister.jpg',
+    bg:'#E8E4E0', rating:4.8, reviews:567,
+    ingredients:['Elderberry','Vitamin C','Vitamin D3','Zinc','B-Complex','Iron'],
+    details:'Premium Canister · Elderberry & Vitamins · Elevate your everyday wellness routine.'
+  }
+];
+
+const ingredientsData = [
+  {icon:'<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--fire)" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><circle cx="7" cy="8" r="2.5"/><circle cx="17" cy="8" r="2.5"/><circle cx="9" cy="16" r="2.5"/><circle cx="15" cy="16" r="2.5"/><path d="M12 2v3M12 19v3"/></svg>', name:'Elderberry',  benefit:'Powerful antioxidant supporting immune health and reducing oxidative stress.'},
+  {icon:'<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5"><circle cx="12" cy="12" r="4"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>', name:'Vitamin D3',  benefit:'Essential for bone strength, immune function, and mood regulation.'},
+  {icon:'<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5"><path d="M12 22c-4-3-8-6-8-11a8 8 0 0116 0c0 5-4 8-8 11z"/><circle cx="12" cy="11" r="3"/></svg>', name:'Vitamin C',   benefit:'Supports collagen synthesis, iron absorption, and immune defence.'},
+  {icon:'<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--ember)" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>', name:'B12 Complex', benefit:'Boosts energy metabolism and supports healthy nerve function.'},
+  {icon:'<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#D4607A" stroke-width="1.5"><path d="M12 3c-1.5 0-3 .5-4 2-2 3 0 6 4 10 4-4 6-7 4-10-1-1.5-2.5-2-4-2z"/><path d="M12 3v10"/><path d="M8 14c0 2.2 1.8 4 4 4s4-1.8 4-4"/></svg>', name:'Biotin',      benefit:'Promotes healthy hair, skin, and nails from within.'},
+  {icon:'<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--bone)" stroke-width="1.5"><path d="M6 4a2 2 0 013 0c1.5 1.5 0 4 0 4s2.5 1.5 0 4c-1 1-3 0-3 0v8"/><path d="M18 4a2 2 0 00-3 0c-1.5 1.5 0 4 0 4s-2.5 1.5 0 4c1 1 3 0 3 0v8"/></svg>', name:'Melatonin',     benefit:'Natural sleep hormone that helps regulate your circadian rhythm.'},
+  {icon:'<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#8B70B8" stroke-width="1.5"><path d="M12 2a7 7 0 017 7c0 3-2 5-4 7-1 1-2 3-3 6-1-3-2-5-3-6-2-2-4-4-4-7a7 7 0 017-7z"/><circle cx="12" cy="9" r="2"/></svg>', name:'L-Theanine',     benefit:'Promotes calm relaxation without drowsiness for better sleep.'},
+  {icon:'<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>', name:'Zinc',        benefit:'Essential for immunity, wound healing, and DNA synthesis.'},
+];
+
+const reviewsData = [
+  {name:'Sarah M.',avatar:'#D4380D',letter:'S',stars:5,text:'I\'ve tried so many vitamins and nothing ever stuck. These gummies are genuinely delicious — I look forward to them every morning. Energy levels noticeably better after 3 weeks!'},
+  {name:'James T.',avatar:'#3D7A4A',letter:'J',stars:5,text:'My kids fight over who gets their vitamins now. Complete 180 from before. Mixed berry flavour is incredible and no artificial colours.'},
+  {name:'Priya K.',avatar:'#8B70B8',letter:'P',stars:5,text:'The Sleep Gummies have transformed my bedtime routine. After 2 weeks I fall asleep within 15 minutes and wake up actually refreshed. Life-changing!'},
+  {name:'Michael R.',avatar:'#E8A838',letter:'M',stars:5,text:'The Superfoods Greens taste nothing like greens — and that\'s a compliment! Tropical citrus flavour masks everything. Subscription is so convenient.'},
+  {name:'Emma L.',avatar:'#D4607A',letter:'E',stars:5,text:'Hair Strength Gummies — my hairdresser noticed the difference before I did. Less hairfall in the shower after just 4 weeks. The strawberry flavour is great too.'},
+  {name:'David C.',avatar:'#4A8B5A',letter:'D',stars:4,text:'Great product, fast shipping, beautiful packaging. The premium canister looks amazing on my desk. Love the daily wellness formula.'},
+];
+
+const faqs = [
+  {q:'Are HECHARR gummies suitable for vegans?', a:'Yes! All our gummies are 100% vegan, made with pectin instead of gelatin, and free from animal-derived ingredients.'},
+  {q:'How long until I see results?', a:'Most customers notice improved energy within 1–2 weeks. Skin, hair, and nail benefits typically appear after 4–8 weeks of consistent daily use.'},
+  {q:'Can I take multiple products together?', a:'Absolutely. Our formulas are designed to complement each other. If you\'re combining products, check the combined vitamin totals don\'t exceed recommended daily values.'},
+  {q:'Is there a money-back guarantee?', a:'Yes — we offer a 30-day satisfaction guarantee. If you\'re not happy for any reason, contact us for a full refund, no questions asked.'},
+  {q:'How many gummies should I take per day?', a:'The recommended dose is 1–2 gummies per day depending on the product. Check each product label for specific dosage instructions.'},
+  {q:'Do you ship internationally?', a:'Yes! We ship to 50+ countries. International shipping takes 7–14 business days. Duties and taxes may apply depending on your country.'},
+];
+
+// ===== STATE =====
+function getCartKey() { return user ? `hecharr_cart_${user.id}` : 'hecharr_cart_guest'; }
+function loadCart() { try { return JSON.parse(localStorage.getItem(getCartKey())||'[]'); } catch(e) { return []; } }
+let user = JSON.parse(localStorage.getItem('hecharr_user')||'null');
+let cart = (function(){ try { const k=user?`hecharr_cart_${user.id}`:'hecharr_cart_guest'; return JSON.parse(localStorage.getItem(k)||'[]'); } catch(e) { return []; } })();
+let selectedSubOption = 'monthly';
+let checkoutStep = 1;
+let checkoutData = {};
+let stripeInstance = null, stripeElements = null, cardElement = null;
+
+// ===== RENDER =====
+function renderMarquee() {
+  const items = ['● Vegan Certified','● Gluten Free','● No Artificial Colours','● Lab Tested','● Non-GMO','● Sugar Free','● 30-Day Guarantee','● Free Shipping Over $50','● FSSAI Approved'];
+  document.getElementById('marqueeTrack').innerHTML = [...items,...items].map(i=>`<div class="marquee-item">${i}<div class="mdot"></div></div>`).join('');
+}
+
+function renderProducts() {
+  document.getElementById('productsGrid').innerHTML = products.map(p => `
+    <div class="product-card" onclick="openProductDetail(${p.id})">
+      ${p.badge==='popular'?'<div class="product-badge" style="background:var(--deep)">★ BEST SELLER</div>':''}
+      ${p.badge==='new'?'<div class="product-badge" style="background:var(--coral)">✦ NEW</div>':''}
+      <div class="product-img" style="background:${p.bg}">
+        <img src="${p.image}" alt="${p.name}" loading="lazy" style="width:100%;height:100%;object-fit:cover">
+      </div>
+      <div class="product-info">
+        <div class="product-rating"><span class="stars">★★★★★</span> ${p.rating} (${p.reviews.toLocaleString()} reviews)</div>
+        <div class="product-name">${p.name}</div>
+        <div class="product-desc">${p.desc}</div>
+        <div class="product-benefits">${p.benefits.map(b=>`<span class="benefit-pill">✓ ${b}</span>`).join('')}</div>
+        <div class="product-footer">
+          <div>
+            <div class="product-price">${formatPrice(p.priceUSD)} <span class="product-price-sub">one-time</span></div>
+            <div style="font-size:12px;color:var(--green);font-weight:600;margin-top:2px">Or ${formatPrice(p.subPriceUSD)}/mo with subscribe</div>
+          </div>
+          <button class="btn-add" onclick="event.stopPropagation();addToCart(${p.id})">Add +</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openProductDetail(id) {
+  const p = products.find(x=>x.id===id);
+  if (!p) return;
+  const content = document.getElementById('productDetailContent');
+  content.innerHTML = `
+    <img class="product-modal-img" src="${p.image}" alt="${p.name}">
+    <div class="product-modal-body">
+      <div class="product-rating"><span class="stars">★★★★★</span> ${p.rating} (${p.reviews.toLocaleString()} reviews)</div>
+      <div class="product-name">${p.name}</div>
+      <div class="product-desc">${p.details || p.desc}</div>
+      <div style="font-family:var(--serif);font-style:italic;font-size:13px;color:var(--ash);margin-bottom:16px">${p.desc}</div>
+      <div style="font-size:11px;font-weight:700;color:var(--ash);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px">Key Ingredients</div>
+      <div class="modal-ingredients">${(p.ingredients||[]).map(i=>`<span class="modal-ingredient">${i}</span>`).join('')}</div>
+      <div class="product-benefits" style="margin-bottom:20px">${p.benefits.map(b=>`<span class="benefit-pill">✓ ${b}</span>`).join('')}</div>
+      <div class="product-modal-footer">
+        <div>
+          <div class="product-price" style="font-size:36px">${formatPrice(p.priceUSD)}</div>
+          <div style="font-size:12px;color:var(--green);font-weight:600;margin-top:4px">Or ${formatPrice(p.subPriceUSD)}/mo with subscribe</div>
+        </div>
+        <button class="btn-add" style="padding:14px 32px;font-size:13px" onclick="addToCart(${p.id});closeProductModal()">Add to Cart →</button>
+      </div>
+    </div>`;
+  document.getElementById('productDetailModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeProductModal() {
+  document.getElementById('productDetailModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function renderIngredients() {
+  document.getElementById('ingredientsGrid').innerHTML = ingredientsData.map(i=>`
+    <div class="ingredient-card"><div class="ingredient-icon">${i.icon}</div><div class="ingredient-name">${i.name}</div><div class="ingredient-benefit">${i.benefit}</div></div>
+  `).join('');
+}
+function renderReviews() {
+  document.getElementById('reviewsGrid').innerHTML = reviewsData.map(r=>`
+    <div class="review-card"><div class="review-stars">${'★'.repeat(r.stars)}</div><div class="review-text">"${r.text}"</div><div class="review-author"><div class="review-avatar" style="background:${r.avatar}">${r.letter}</div><div><div class="review-name">${r.name}</div><div class="review-verified">✓ Verified Purchase</div></div></div></div>
+  `).join('');
+}
+
+function renderSubscription() {
+  const prices = {monthly:27.99, bimonthly:25.99, quarterly:23.99};
+  document.getElementById('subscriptionCard').innerHTML = `
+    <div class="sub-price-label">Starting from</div>
+    <div class="sub-price">${formatPrice(23.99)}</div>
+    <div class="sub-save">Save up to 20%</div>
+    ${[['monthly','Monthly','Every 30 days',27.99],['bimonthly','Every 2 Months','Every 60 days',25.99],['quarterly','Quarterly','3 bottles — best value',23.99]].map(([k,name,desc,p])=>`
+      <div class="sub-option ${selectedSubOption===k?'active':''}" onclick="selectedSubOption='${k}';renderSubscription()">
+        <div class="sub-radio"></div><div><div class="sub-option-name">${name}</div><div class="sub-option-desc">${desc}</div></div><div class="sub-option-price">${formatPrice(p)}</div>
+      </div>`).join('')}
+    <button class="btn-modal" onclick="addSubToCart()">Subscribe & Save →</button>
+    <div style="text-align:center;font-size:12px;color:var(--mid);margin-top:10px">Cancel anytime · Free shipping · No commitment</div>
+  `;
+}
+function renderFAQ() {
+  document.getElementById('faqList').innerHTML = faqs.map((f,i)=>`
+    <div class="faq-item" id="faq-${i}"><div class="faq-question" onclick="toggleFAQ(${i})"><span>${f.q}</span><span class="faq-arrow">⌃</span></div><div class="faq-answer">${f.a}</div></div>
+  `).join('');
+}
+function toggleFAQ(i) { document.getElementById(`faq-${i}`).classList.toggle('open'); }
+
+// ===== CART =====
+function saveCart() { localStorage.setItem(getCartKey(), JSON.stringify(cart)); }
+function addToCart(productId) {
+  const p = products.find(x=>x.id===productId);
+  const existing = cart.find(i=>i.id===productId);
+  if (existing) existing.qty++;
+  else cart.push({id:productId, name:p.name, priceUSD:p.priceUSD, qty:1, thumb:p.thumb});
+  saveCart(); updateCartUI();
+  showToast('✓', `${p.name} added to cart!`, 'success');
+}
+function addSubToCart() {
+  const prices = {monthly:27.99, bimonthly:25.99, quarterly:23.99};
+  const labels = {monthly:'Monthly', bimonthly:'Bi-Monthly', quarterly:'Quarterly'};
+  cart.push({id:`sub_${Date.now()}`, name:`Multivitamin — ${labels[selectedSubOption]} Sub`, priceUSD:prices[selectedSubOption], qty:1, sub:true, thumb:'images/multivitamin-hero.jpg'});
+  saveCart(); updateCartUI(); toggleCart();
+  showToast('✓', 'Subscription added! Savings applied.', 'success');
+}
+function removeFromCart(idx) { cart.splice(idx,1); saveCart(); updateCartUI(); renderCartDrawer(); }
+function changeQty(idx, delta) {
+  cart[idx].qty += delta;
+  if (cart[idx].qty<=0) removeFromCart(idx);
+  else { saveCart(); updateCartUI(); renderCartDrawer(); }
+}
+function updateCartUI() {
+  const total = cart.reduce((s,i) => s+i.qty, 0);
+  const badge = document.getElementById('cartBadge');
+  badge.style.display = total>0 ? 'flex' : 'none';
+  badge.textContent = total;
+  renderCartDrawer();
+}
+function renderCartDrawer() {
+  const body = document.getElementById('cartBody');
+  const footer = document.getElementById('cartFooter');
+  if (cart.length===0) {
+    body.innerHTML = `<div class="cart-empty"><div class="cart-empty-emoji">🛒</div><div class="cart-empty-text">Your cart is empty</div><div class="cart-empty-sub">Add some gummies to get started!</div></div>`;
+    footer.innerHTML = '';
+    return;
+  }
+  body.innerHTML = cart.map((item,idx) => `
+    <div class="cart-item">
+      <img class="cart-item-thumb" src="${item.thumb||'images/multivitamin-hero.jpg'}" alt="${item.name}">
+      <div style="flex:1">
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-variant">${item.sub ? '↻ Subscription' : '○ One-time'}</div>
+        <div class="cart-item-qty">
+          <button class="qty-btn" onclick="changeQty(${idx},-1)">−</button>
+          <span class="qty-num">${item.qty}</span>
+          <button class="qty-btn" onclick="changeQty(${idx},1)">+</button>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+        <span class="cart-item-price">${formatPrice(item.priceUSD * item.qty)}</span>
+        <span class="cart-remove" onclick="removeFromCart(${idx})">✕ remove</span>
+      </div>
+    </div>`).join('');
+  const subtotalUSD = cart.reduce((s,i) => s+i.priceUSD*i.qty, 0);
+  const shippingUSD = subtotalUSD>=50?0:4.99;
+  const totalUSD = subtotalUSD+shippingUSD;
+  footer.innerHTML = `
+    <div style="padding:16px 24px;border-top:1px solid var(--light)">
+      <div class="cart-subtotal"><span>Subtotal</span><span>${formatPrice(subtotalUSD)}</span></div>
+      <div class="cart-subtotal"><span>Shipping</span><span>${shippingUSD===0?'FREE':formatPrice(shippingUSD)}</span></div>
+      <div class="cart-total"><span>Total</span><span>${formatPrice(totalUSD)}</span></div>
+      <button class="btn-primary" style="width:100%;margin-top:4px" onclick="proceedToCheckout()">Checkout →</button>
+      <div style="text-align:center;font-size:12px;color:var(--mid);margin-top:8px">Secure checkout · Powered by Stripe</div>
+    </div>`;
+}
+function toggleCart() { document.getElementById('cartDrawer').classList.toggle('open'); document.getElementById('cartOverlay').classList.toggle('open'); }
+
+// ===== AUTH =====
+function openModal(type) { const e=document.getElementById(type+'Error'); if(e) e.textContent=''; document.getElementById(`${type}Modal`).classList.add('open'); document.body.style.overflow='hidden'; setTimeout(()=>{ const i=document.querySelector(`#${type}Modal input`); if(i) i.focus(); },100); }
+function closeModal(type) { document.getElementById(`${type}Modal`).classList.remove('open'); document.body.style.overflow=''; }
+function switchModal(from, to) { closeModal(from); setTimeout(()=>openModal(to),200); }
+function toggleUserMenu(e) { e.stopPropagation(); document.getElementById('userDropdown').classList.toggle('open'); document.getElementById('currencyDropdown').classList.remove('open'); }
+function setButtonLoading(btn, loading, text) { if(loading){btn.innerHTML='<div class="spinner"><span></span><span></span><span></span></div>';btn.disabled=true;}else{btn.innerHTML=text;btn.disabled=false;} }
+
+async function handleLogin() {
+  const email=document.getElementById('loginEmail').value.trim(), pass=document.getElementById('loginPassword').value, errEl=document.getElementById('loginError');
+  errEl.textContent='';
+  if(!email||!pass){errEl.textContent='Please enter your email and password.';return;}
+  const btn=document.getElementById('loginBtn'); setButtonLoading(btn,true,'');
+  try{
+    const res=await fetch(`${BACKEND_URL}/auth/login`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password:pass})});
+    const data=await res.json();
+    if(!res.ok||!data.success) throw new Error(data.error||'Login failed.');
+    const guestCart=[...cart];
+    user=data.user; localStorage.setItem('hecharr_user',JSON.stringify(user)); localStorage.setItem('hecharr_session',JSON.stringify(data.session));
+    cart=loadCart();
+    guestCart.forEach(g=>{const e=cart.find(i=>i.id===g.id&&!i.sub);if(e)e.qty+=g.qty;else cart.push(g);});
+    localStorage.removeItem('hecharr_cart_guest'); saveCart();
+    closeModal('login'); updateAuthUI(); updateCartUI();
+    showToast('→',`Welcome back, ${user.name.split(' ')[0]}!`,'success');
+  }catch(err){errEl.textContent=err.message;}finally{setButtonLoading(btn,false,'Log In');}
+}
+
+async function handleSignup() {
+  const first=document.getElementById('signupFirst').value.trim(),last=document.getElementById('signupLast').value.trim(),email=document.getElementById('signupEmail').value.trim(),pass=document.getElementById('signupPassword').value,errEl=document.getElementById('signupError');
+  errEl.textContent='';
+  if(!first||!email||!pass){errEl.textContent='First name, email and password are required.';return;}
+  if(pass.length<8){errEl.textContent='Password must be at least 8 characters.';return;}
+  const btn=document.getElementById('signupBtn'); setButtonLoading(btn,true,'');
+  try{
+    const res=await fetch(`${BACKEND_URL}/auth/signup`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password:pass,firstName:first,lastName:last})});
+    const data=await res.json();
+    if(!res.ok||!data.success) throw new Error(data.error||'Signup failed.');
+    const guestCart=[...cart]; user=data.user; localStorage.setItem('hecharr_user',JSON.stringify(user));
+    if(data.session) localStorage.setItem('hecharr_session',JSON.stringify(data.session));
+    cart=[...guestCart]; localStorage.removeItem('hecharr_cart_guest'); saveCart();
+    closeModal('signup'); updateAuthUI(); updateCartUI();
+    showToast('✓',`Welcome to HECHARR, ${first}!`,'success');
+  }catch(err){errEl.textContent=err.message;}finally{setButtonLoading(btn,false,'Create Account');}
+}
+
+function logout() { saveCart(); user=null; localStorage.removeItem('hecharr_user'); localStorage.removeItem('hecharr_session'); document.getElementById('userDropdown').classList.remove('open'); cart=loadCart(); updateAuthUI(); updateCartUI(); showToast('→','You\'ve been logged out.',''); }
+function updateAuthUI() { document.getElementById('authButtons').style.display=user?'none':'flex'; document.getElementById('userMenu').style.display=user?'flex':'none'; if(user) document.getElementById('userMenuName').textContent=user.name?.split(' ')[0]||'Hi!'; }
+
+async function openOrdersModal() {
+  document.getElementById('userDropdown').classList.remove('open'); openModal('orders');
+  const content=document.getElementById('ordersContent');
+  content.innerHTML='<div style="text-align:center;padding:32px;color:var(--mid)"><div class="spinner" style="display:inline-flex"><span></span><span></span><span></span></div> Loading…</div>';
+  try{
+    const session=JSON.parse(localStorage.getItem('hecharr_session')||'null');
+    if(!session?.access_token) throw new Error('Not logged in.');
+    const res=await fetch(`${BACKEND_URL}/my-orders`,{headers:{'Authorization':`Bearer ${session.access_token}`}});
+    const data=await res.json();
+    if(!res.ok||!data.success) throw new Error(data.error||'Failed to load orders.');
+    if(!data.orders.length){content.innerHTML='<div style="text-align:center;padding:40px;color:var(--mid)">No orders yet.</div>';return;}
+    content.innerHTML=data.orders.map(o=>{let items='-';try{items=(Array.isArray(o.items)?o.items:JSON.parse(o.items||'[]')).map(i=>`${i.name} ×${i.qty}`).join(', ');}catch(e){}
+      return `<div style="background:var(--light);border-radius:4px;padding:16px;margin-bottom:12px;border:1px solid var(--bone)"><div style="display:flex;justify-content:space-between;margin-bottom:8px"><div style="font-family:var(--display);color:var(--coral);font-size:18px;letter-spacing:1px">${o.order_id}</div><div style="font-size:11px;font-weight:700;background:#E8F5E9;color:var(--green);padding:3px 10px;border-radius:2px;text-transform:capitalize">${o.status}</div></div><div style="font-size:12px;color:var(--mid);margin-bottom:4px">${new Date(o.created_at).toLocaleDateString('en-GB',{day:'2-digit',month:'long',year:'numeric'})}</div><div style="font-size:13px;color:var(--warm);margin-bottom:4px">${items}</div><div style="font-size:15px;font-weight:700;color:var(--deep)">${parseFloat(o.total_amount||0).toFixed(2)} ${o.currency}</div></div>`;
+    }).join('');
+  }catch(err){content.innerHTML=`<div style="text-align:center;padding:32px;color:var(--red)">${err.message}</div>`;}
+}
+
+// ===== CHECKOUT =====
+function proceedToCheckout() { if(cart.length===0)return; toggleCart(); checkoutStep=1; checkoutData={}; if(user){checkoutData.firstName=user.firstName||user.name?.split(' ')[0]||'';checkoutData.lastName=user.lastName||user.name?.split(' ')[1]||'';checkoutData.email=user.email||'';} renderCheckout(); openModal('checkout'); }
+function getCartTotals() { const s=cart.reduce((a,i)=>a+i.priceUSD*i.qty,0); const sh=s>=50?0:4.99; return {subtotalUSD:s,shippingUSD:sh,totalUSD:s+sh}; }
+
+function renderCheckout() {
+  const {subtotalUSD,shippingUSD,totalUSD}=getCartTotals();
+  const content=document.getElementById('checkoutContent');
+  const orderMini=`<div class="order-mini">${cart.map(i=>`<div class="order-mini-item"><span>${i.name} ×${i.qty}</span><span>${formatPrice(i.priceUSD*i.qty)}</span></div>`).join('')}<div class="order-mini-item"><span>Shipping</span><span>${shippingUSD===0?'FREE':formatPrice(shippingUSD)}</span></div><div class="order-mini-total"><span>Total</span><span style="color:var(--coral)">${formatPrice(totalUSD)}</span></div></div>`;
+
+  if(checkoutStep===1){
+    content.innerHTML=`<div class="modal-title">Checkout</div><div class="checkout-steps"><div class="ck-step active">1 · Info</div><div class="ck-step">2 · Shipping</div><div class="ck-step">3 · Payment</div></div>${orderMini}<div class="form-row"><div class="form-group"><label class="form-label">First Name *</label><input class="form-input" id="co_first" placeholder="Alex" value="${checkoutData.firstName||''}"></div><div class="form-group"><label class="form-label">Last Name</label><input class="form-input" id="co_last" placeholder="Johnson" value="${checkoutData.lastName||''}"></div></div><div class="form-group"><label class="form-label">Email *</label><input class="form-input" id="co_email" type="email" placeholder="you@example.com" value="${checkoutData.email||''}"></div><div class="form-group"><label class="form-label">Phone</label><input class="form-input" id="co_phone" type="tel" placeholder="+1 555 000 0000" value="${checkoutData.phone||''}"></div><button class="btn-modal" onclick="ckStep1()">Continue to Shipping →</button>`;
+  } else if(checkoutStep===2){
+    content.innerHTML=`<div class="modal-title">Shipping Address</div><div class="checkout-steps"><div class="ck-step done">✓ Info</div><div class="ck-step active">2 · Shipping</div><div class="ck-step">3 · Payment</div></div>${orderMini}<div class="form-group"><label class="form-label">Address *</label><input class="form-input" id="co_addr" placeholder="123 Main Street" value="${checkoutData.address||''}"></div><div class="form-group"><label class="form-label">Apartment / Suite</label><input class="form-input" id="co_addr2" placeholder="Apt 4B" value="${checkoutData.address2||''}"></div><div class="form-row"><div class="form-group"><label class="form-label">City *</label><input class="form-input" id="co_city" placeholder="New York" value="${checkoutData.city||''}"></div><div class="form-group"><label class="form-label">ZIP *</label><input class="form-input" id="co_zip" placeholder="10001" value="${checkoutData.zip||''}"></div></div><div class="form-row"><div class="form-group"><label class="form-label">State</label><input class="form-input" id="co_state" placeholder="NY" value="${checkoutData.state||''}"></div><div class="form-group"><label class="form-label">Country *</label><input class="form-input" id="co_country" placeholder="United States" value="${checkoutData.country||'United States'}"></div></div><button class="btn-modal" onclick="ckStep2()">Continue to Payment →</button><button onclick="checkoutStep=1;renderCheckout()" style="width:100%;padding:11px;margin-top:8px;background:transparent;border:none;color:var(--mid);cursor:pointer;font-family:var(--body);font-size:14px">← Back</button>`;
+  } else if(checkoutStep===3){
+    content.innerHTML=`<div class="modal-title">Payment</div><div class="checkout-steps"><div class="ck-step done">✓ Info</div><div class="ck-step done">✓ Shipping</div><div class="ck-step active">3 · Payment</div></div>${orderMini}<div style="margin-bottom:16px"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px"><div style="font-size:13px;font-weight:700;color:var(--deep)">Card Details</div><div style="display:flex;gap:5px"><div style="background:#1A1F71;color:white;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700">VISA</div><div style="background:#EB001B;color:white;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700">MC</div><div style="background:#006FCF;color:white;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700">AMEX</div></div></div><div id="stripe-card-element"></div><div id="stripe-card-errors"></div></div><div class="secure-badge"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2E9E5B" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg><span style="font-size:12px;color:var(--mid)">256-bit SSL · Powered by <strong style="color:#635BFF">Stripe</strong></span></div><button class="btn-modal" id="payBtn" onclick="processPayment()">Pay ${formatPrice(totalUSD)} →</button><button onclick="checkoutStep=2;renderCheckout()" style="width:100%;padding:11px;margin-top:8px;background:transparent;border:none;color:var(--mid);cursor:pointer;font-family:var(--body);font-size:14px">← Back</button>`;
+    setTimeout(mountStripeCard, 60);
+  } else if(checkoutStep===4){
+    content.innerHTML=`<div style="text-align:center;padding:12px 0 0"><div style="width:72px;height:72px;background:linear-gradient(135deg,#2E9E5B,#6DD68A);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 18px;animation:modalIn .5s cubic-bezier(.16,1,.3,1)">✓</div><div class="modal-title" style="text-align:center">Order Confirmed</div><div class="modal-sub" style="text-align:center">Thank you! Your gummies are on their way.</div><div style="background:var(--light);border-radius:4px;padding:18px;margin:20px 0;text-align:left"><div style="font-size:12px;color:var(--mid);margin-bottom:3px">Order Number</div><div style="font-weight:700;font-size:20px;color:var(--coral);letter-spacing:1px">${checkoutData.orderId}</div><div style="font-size:12px;color:var(--mid);margin-top:10px">Confirmation sent to <strong>${checkoutData.email}</strong></div></div><button class="btn-modal" onclick="closeModal('checkout');cart=[];saveCart();updateCartUI()">Continue Shopping →</button></div>`;
+  }
+}
+
+function ckStep1(){checkoutData.firstName=document.getElementById('co_first').value.trim();checkoutData.lastName=document.getElementById('co_last').value.trim();checkoutData.email=document.getElementById('co_email').value.trim();checkoutData.phone=document.getElementById('co_phone').value.trim();if(!checkoutData.firstName){showToast('!','First name is required.','error');return;}if(!checkoutData.email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(checkoutData.email)){showToast('!','Please enter a valid email.','error');return;}checkoutStep=2;renderCheckout();}
+function ckStep2(){checkoutData.address=document.getElementById('co_addr').value.trim();checkoutData.address2=document.getElementById('co_addr2').value.trim();checkoutData.city=document.getElementById('co_city').value.trim();checkoutData.zip=document.getElementById('co_zip').value.trim();checkoutData.state=document.getElementById('co_state').value.trim();checkoutData.country=document.getElementById('co_country').value.trim();if(!checkoutData.address||!checkoutData.city){showToast('!','Address and city are required.','error');return;}if(!checkoutData.zip){showToast('!','ZIP / postcode is required.','error');return;}checkoutStep=3;renderCheckout();}
+
+// ===== STRIPE =====
+function getStripe(){if(!stripeInstance&&typeof Stripe!=='undefined')stripeInstance=Stripe(STRIPE_PUBLISHABLE_KEY);return stripeInstance;}
+function mountStripeCard(){const stripe=getStripe();if(!stripe)return;stripeElements=stripe.elements();cardElement=stripeElements.create('card',{style:{base:{fontFamily:"'Outfit',sans-serif",fontSize:'15px',color:'#1C1512','::placeholder':{color:'#8B7B6B'}},invalid:{color:'#C0392B'}},hidePostalCode:false});const m=document.getElementById('stripe-card-element');if(!m)return;cardElement.mount('#stripe-card-element');cardElement.on('change',e=>{const err=document.getElementById('stripe-card-errors');if(err)err.textContent=e.error?e.error.message:'';});}
+
+async function processPayment(){
+  if(!cardElement){showToast('!','Card form not ready.','error');return;}
+  const {totalUSD}=getCartTotals(); const btn=document.getElementById('payBtn'); const orig=btn.innerHTML; setButtonLoading(btn,true,'');
+  try{
+    const intentRes=await fetch(`${BACKEND_URL}/create-payment-intent`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:Math.round(totalUSD*100),currency:'USD',customer:checkoutData,items:cart})});
+    if(!intentRes.ok){const t=await intentRes.text();let m='Backend error.';try{m=JSON.parse(t).error||m;}catch(e){}throw new Error(m);}
+    const {clientSecret,error:ie}=await intentRes.json();
+    if(ie)throw new Error(ie); if(!clientSecret)throw new Error('No clientSecret returned.');
+    const stripe=getStripe();
+    const {paymentIntent,error}=await stripe.confirmCardPayment(clientSecret,{payment_method:{card:cardElement,billing_details:{name:`${checkoutData.firstName||''} ${checkoutData.lastName||''}`.trim(),email:checkoutData.email,phone:checkoutData.phone||undefined,address:{line1:checkoutData.address||undefined,line2:checkoutData.address2||undefined,city:checkoutData.city||undefined,postal_code:checkoutData.zip||undefined,state:checkoutData.state||undefined,country:'US'}}}});
+    if(error)throw new Error(error.message); if(paymentIntent.status!=='succeeded')throw new Error(`Unexpected status: ${paymentIntent.status}`);
+    const session=JSON.parse(localStorage.getItem('hecharr_session')||'null');
+    const saveRes=await fetch(`${BACKEND_URL}/save-order`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({paymentIntentId:paymentIntent.id,customer:checkoutData,items:cart,total:totalUSD,currency:'USD',authUserId:user?.id||null})});
+    const saveData=await saveRes.json();
+    if(!saveData.success)throw new Error(saveData.error||'Failed to save order.');
+    checkoutStep=4; checkoutData.orderId=saveData.orderId; renderCheckout();
+    showToast('✓','Payment successful! Order confirmed.','success');
+  }catch(err){console.error(err);showToast('✕',err.message||'Payment failed.','error');btn.innerHTML=orig;btn.disabled=false;}
+}
+
+// ===== TOAST =====
+function showToast(icon,message,type=''){const c=document.getElementById('toastContainer');const t=document.createElement('div');t.className=`toast ${type}`;t.innerHTML=`<span>${icon}</span><span>${message}</span>`;c.appendChild(t);setTimeout(()=>{t.style.opacity='0';t.style.transform='translateX(100%)';t.style.transition='all .3s';setTimeout(()=>t.remove(),300);},3200);}
+
+// ===== MOBILE MENU =====
+function toggleMobileMenu(){const m=document.getElementById('mobileMenu'),b=document.getElementById('hamburgerBtn');m.classList.toggle('open');b.classList.toggle('open');document.body.style.overflow=m.classList.contains('open')?'hidden':'';if(m.classList.contains('open')){renderMobileCurrency();renderMobileAuth();}}
+function closeMobileMenu(){document.getElementById('mobileMenu').classList.remove('open');document.getElementById('hamburgerBtn').classList.remove('open');document.body.style.overflow='';}
+function renderMobileCurrency(){document.getElementById('mobileCurrencyGrid').innerHTML=CURRENCIES.slice(0,6).map(c=>`<div class="mobile-currency-opt ${c.code===activeCurrency.code?'active':''}" onclick="setCurrency('${c.code}');renderMobileCurrency()"><span>${c.flag}</span> ${c.code}</div>`).join('');}
+function renderMobileAuth(){const s=document.getElementById('mobileAuthSection');s.innerHTML=user?`<div style="color:var(--cream);font-size:14px;margin-bottom:12px">Hi, ${user.name?.split(' ')[0]||'there'}!</div><div class="mobile-auth-btns"><button class="mob-login" onclick="closeMobileMenu();openOrdersModal()">My Orders</button><button class="mob-signup" onclick="closeMobileMenu();logout()" style="background:var(--red);border-color:var(--red)">Log out</button></div>`:`<div class="mobile-auth-btns"><button class="mob-login" onclick="closeMobileMenu();openModal('login')">Log in</button><button class="mob-signup" onclick="closeMobileMenu();openModal('signup')">Sign up</button></div>`;}
+
+// ===== NAV SCROLL =====
+window.addEventListener('scroll', () => { document.getElementById('navbar').style.boxShadow = window.scrollY>40 ? '0 4px 24px rgba(26,10,0,.07)' : 'none'; });
+
+// ===== INIT =====
+if(localStorage.getItem('hecharr_cart')&&!localStorage.getItem('hecharr_cart_guest')){localStorage.setItem('hecharr_cart_guest',localStorage.getItem('hecharr_cart'));localStorage.removeItem('hecharr_cart');}
+renderCurrencyDropdown(); renderMarquee(); renderProducts(); renderIngredients(); renderReviews(); renderSubscription(); renderFAQ(); updateAuthUI(); updateCartUI();
+</script>
+</body>
+</html>
